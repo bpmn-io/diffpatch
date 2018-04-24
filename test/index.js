@@ -2,19 +2,29 @@
  * mocha's bdd syntax is inspired in RSpec
  *   please read: http://betterspecs.org/
  */
-import * as jsondiffpatch from '../build/jsondiffpatch.esm';
+import {
+  DiffPatcher,
+  JsonPatchFormatter,
+  HtmlFormatter,
+  clone,
+  diff,
+  patch,
+  reverse,
+  unpatch,
+} from '../';
+
 import examples from './examples/diffpatch';
-import chai from 'chai';
-const expect = chai.expect;
+
+import {
+  expect,
+} from 'chai';
 
 describe('jsondiffpatch', () => {
   before(() => {});
   it('has a diff method', () => {
-    expect(jsondiffpatch.diff).to.be.a('function');
+    expect(diff).to.be.a('function');
   });
 });
-
-const DiffPatcher = jsondiffpatch.DiffPatcher;
 
 const isArray =
   typeof Array.isArray === 'function'
@@ -106,7 +116,7 @@ describe('DiffPatcher', () => {
           if (!example.noPatch) {
             it('can patch', function() {
               const right = this.instance.patch(
-                jsondiffpatch.clone(example.left),
+                clone(example.left),
                 example.delta
               );
               expect(right).to.deep.equal(example.right);
@@ -121,14 +131,14 @@ describe('DiffPatcher', () => {
                 // patch and compare the results
                 expect(
                   this.instance.patch(
-                    jsondiffpatch.clone(example.right),
+                    clone(example.right),
                     reverse
                   )
                 ).to.deep.equal(example.left);
                 reverse = this.instance.diff(example.right, example.left);
                 expect(
                   this.instance.patch(
-                    jsondiffpatch.clone(example.right),
+                    clone(example.right),
                     reverse
                   )
                 ).to.deep.equal(example.left);
@@ -136,7 +146,7 @@ describe('DiffPatcher', () => {
             });
             it('can unpatch', function() {
               const left = this.instance.unpatch(
-                jsondiffpatch.clone(example.right),
+                clone(example.right),
                 example.delta
               );
               expect(left).to.deep.equal(example.left);
@@ -162,14 +172,14 @@ describe('DiffPatcher', () => {
           },
         },
       };
-      const cloned = jsondiffpatch.clone(obj);
+      const cloned = clone(obj);
       expect(cloned).to.deep.equal(obj);
     });
     it('clones RegExp', () => {
       const obj = {
         pattern: /expr/gim,
       };
-      const cloned = jsondiffpatch.clone(obj);
+      const cloned = clone(obj);
       expect(cloned).to.deep.equal({
         pattern: /expr/gim,
       });
@@ -205,19 +215,19 @@ describe('DiffPatcher', () => {
 
   describe('static shortcuts', () => {
     it('diff', () => {
-      const delta = jsondiffpatch.diff(4, 5);
+      const delta = diff(4, 5);
       expect(delta).to.deep.equal([4, 5]);
     });
     it('patch', () => {
-      const right = jsondiffpatch.patch(4, [4, 5]);
+      const right = patch(4, [4, 5]);
       expect(right).to.eql(5);
     });
     it('unpatch', () => {
-      const left = jsondiffpatch.unpatch(5, [4, 5]);
+      const left = unpatch(5, [4, 5]);
       expect(left).to.eql(4);
     });
     it('reverse', () => {
-      const reverseDelta = jsondiffpatch.reverse([4, 5]);
+      const reverseDelta = reverse([4, 5]);
       expect(reverseDelta).to.deep.equal([5, 4]);
     });
   });
@@ -378,7 +388,7 @@ describe('DiffPatcher', () => {
 
       before(() => {
         instance = new DiffPatcher();
-        formatter = jsondiffpatch.formatters.jsonpatch;
+        formatter = new JsonPatchFormatter();
       });
 
       const expectFormat = (before, after, expected) => {
@@ -490,7 +500,7 @@ describe('DiffPatcher', () => {
 
       before(() => {
         instance = new DiffPatcher({ textDiff: { minLength: 10 } });
-        formatter = jsondiffpatch.formatters.html;
+        formatter = new HtmlFormatter();
       });
 
       const expectFormat = (before, after, expected) => {
