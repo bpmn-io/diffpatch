@@ -1,10 +1,11 @@
 {
-  "name": "jsondiffpatch",
+  "name": "@bpmn-io/jsondiffpatch",
   "version": "0.3.9",
   "author": "Benjamin Eidelman <beneidel@gmail.com>",
   "description": "Diff & Patch for Javascript objects",
   "contributors": [
-    "Benjamin Eidelman <beneidel@gmail.com>"
+    "Benjamin Eidelman <beneidel@gmail.com>",
+    "bpmn.io Contributors <https://bpmn.io>"
   ],
   "browser": "dist/jsondiffpatch.umd.js",
   "main": "dist/jsondiffpatch.cjs.js",
@@ -78,10 +79,8 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-visualizer": "^0.3.1"
   },
-  "bundleDependencies": [],
   "license": "MIT",
   "engines": {
-    "node": ">=4.8.0"
-  },
-  "homepage": "https://github.com/benjamine/jsondiffpatch"
+    "node": ">=8"
+  }
 }
