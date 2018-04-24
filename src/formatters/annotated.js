@@ -1,6 +1,6 @@
 import BaseFormatter from './base';
 
-class AnnotatedFormatter extends BaseFormatter {
+export default class AnnotatedFormatter extends BaseFormatter {
   constructor() {
     super();
     this.includeMoveDestinations = false;
@@ -198,16 +198,3 @@ AnnotatedFormatter.prototype.format_deleted = formatAnyChange;
 AnnotatedFormatter.prototype.format_moved = formatAnyChange;
 AnnotatedFormatter.prototype.format_textdiff = formatAnyChange;
 /* eslint-enable camelcase */
-
-/* jshint camelcase: true */
-
-export default AnnotatedFormatter;
-
-let defaultInstance;
-
-export function format(delta, left) {
-  if (!defaultInstance) {
-    defaultInstance = new AnnotatedFormatter();
-  }
-  return defaultInstance.format(delta, left);
-}

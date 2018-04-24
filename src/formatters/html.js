@@ -1,6 +1,6 @@
 import BaseFormatter from './base';
 
-class HtmlFormatter extends BaseFormatter {
+export default class HtmlFormatter extends BaseFormatter {
   typeFormattterErrorFormatter(context, err) {
     context.out(`<pre class="jsondiffpatch-error">${err}</pre>`);
   }
@@ -162,6 +162,64 @@ class HtmlFormatter extends BaseFormatter {
     this.formatTextDiffString(context, delta[0]);
     context.out('</div>');
   }
+
+  hideUnchanged(node, delay) {
+    this.showUnchanged(false, node, delay);
+  }
+
+  showUnchanged(show, node, delay) {
+    let el = node || document.body;
+    let prefix = 'jsondiffpatch-unchanged-';
+    let classes = {
+      showing: `${prefix}showing`,
+      hiding: `${prefix}hiding`,
+      visible: `${prefix}visible`,
+      hidden: `${prefix}hidden`,
+    };
+    let list = el.classList;
+    if (!list) {
+      return;
+    }
+    if (!delay) {
+      list.remove(classes.showing);
+      list.remove(classes.hiding);
+      list.remove(classes.visible);
+      list.remove(classes.hidden);
+      if (show === false) {
+        list.add(classes.hidden);
+      }
+      return;
+    }
+    if (show === false) {
+      list.remove(classes.showing);
+      list.add(classes.visible);
+      setTimeout(() => {
+        list.add(classes.hiding);
+      }, 10);
+    } else {
+      list.remove(classes.hiding);
+      list.add(classes.showing);
+      list.remove(classes.hidden);
+    }
+    let intervalId = setInterval(() => {
+      adjustArrows(el);
+    }, 100);
+    setTimeout(() => {
+      list.remove(classes.showing);
+      list.remove(classes.hiding);
+      if (show === false) {
+        list.add(classes.hidden);
+        list.remove(classes.visible);
+      } else {
+        list.add(classes.visible);
+        list.remove(classes.hidden);
+      }
+      setTimeout(() => {
+        list.remove(classes.visible);
+        clearInterval(intervalId);
+      }, delay + 400);
+    }, delay);
+  }
 }
 
 function htmlEscape(text) {
@@ -231,70 +289,3 @@ let adjustArrows = function jsondiffpatchHtmlFormatterAdjustArrows(nodeArg) {
 
 /* jshint camelcase: true */
 /* eslint-enable camelcase */
-
-export const showUnchanged = (show, node, delay) => {
-  let el = node || document.body;
-  let prefix = 'jsondiffpatch-unchanged-';
-  let classes = {
-    showing: `${prefix}showing`,
-    hiding: `${prefix}hiding`,
-    visible: `${prefix}visible`,
-    hidden: `${prefix}hidden`,
-  };
-  let list = el.classList;
-  if (!list) {
-    return;
-  }
-  if (!delay) {
-    list.remove(classes.showing);
-    list.remove(classes.hiding);
-    list.remove(classes.visible);
-    list.remove(classes.hidden);
-    if (show === false) {
-      list.add(classes.hidden);
-    }
-    return;
-  }
-  if (show === false) {
-    list.remove(classes.showing);
-    list.add(classes.visible);
-    setTimeout(() => {
-      list.add(classes.hiding);
-    }, 10);
-  } else {
-    list.remove(classes.hiding);
-    list.add(classes.showing);
-    list.remove(classes.hidden);
-  }
-  let intervalId = setInterval(() => {
-    adjustArrows(el);
-  }, 100);
-  setTimeout(() => {
-    list.remove(classes.showing);
-    list.remove(classes.hiding);
-    if (show === false) {
-      list.add(classes.hidden);
-      list.remove(classes.visible);
-    } else {
-      list.add(classes.visible);
-      list.remove(classes.hidden);
-    }
-    setTimeout(() => {
-      list.remove(classes.visible);
-      clearInterval(intervalId);
-    }, delay + 400);
-  }, delay);
-};
-
-export const hideUnchanged = (node, delay) => showUnchanged(false, node, delay);
-
-export default HtmlFormatter;
-
-let defaultInstance;
-
-export function format(delta, left) {
-  if (!defaultInstance) {
-    defaultInstance = new HtmlFormatter();
-  }
-  return defaultInstance.format(delta, left);
-}

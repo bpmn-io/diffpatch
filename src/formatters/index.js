@@ -1,6 +1,5 @@
-
-export * as base from './base';
-export * as html from './html';
-export * as annotated from './annotated';
-export * as jsonpatch from './jsonpatch';
-export * as console from './console';
+export { default as BaseFormatter } from './base';
+export { default as HtmlFormatter } from './html';
+export { default as AnnotatedFormatter } from './annotated';
+export { default as JsonPatchFormatter } from './jsonpatch';
+export { default as ConsoleFormatter } from './console';

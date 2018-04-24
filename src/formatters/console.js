@@ -20,7 +20,7 @@ let colors = {
   textDiffLine: chalkColor('gray'),
 };
 
-class ConsoleFormatter extends BaseFormatter {
+export default class ConsoleFormatter extends BaseFormatter {
   constructor() {
     super();
     this.includeMoveDestinations = false;
@@ -176,23 +176,4 @@ class ConsoleFormatter extends BaseFormatter {
   format_textdiff(context, delta) {
     this.formatTextDiffString(context, delta[0]);
   }
-}
-
-/* eslint-enable camelcase */
-
-/* jshint camelcase: true */
-
-export default ConsoleFormatter;
-
-let defaultInstance;
-
-export const format = (delta, left) => {
-  if (!defaultInstance) {
-    defaultInstance = new ConsoleFormatter();
-  }
-  return defaultInstance.format(delta, left);
-};
-
-export function log(delta, left) {
-  console.log(format(delta, left));
 }

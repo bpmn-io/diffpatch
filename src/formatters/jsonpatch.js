@@ -7,7 +7,7 @@ const OPERATIONS = {
   move: 'move',
 };
 
-class JSONFormatter extends BaseFormatter {
+export default class JSONPatchFormatter extends BaseFormatter {
   constructor() {
     super();
     this.includeMoveDestinations = true;
@@ -91,14 +91,12 @@ class JSONFormatter extends BaseFormatter {
     let context = {};
     this.prepareContext(context);
     this.recurse(context, delta, left);
-    return context.result;
+    return reorderOps(context.result);
   }
 }
 
 /* jshint camelcase: true */
 /* eslint-enable camelcase */
-
-export default JSONFormatter;
 
 const last = arr => arr[arr.length - 1];
 
@@ -152,17 +150,4 @@ const reorderOps = jsonFormattedDiff => {
   const otherOps = removeOpsOtherOps[1];
   const removeOpsReverse = opsByDescendingOrder(removeOps);
   return removeOpsReverse.concat(otherOps);
-};
-
-let defaultInstance;
-
-export const format = (delta, left) => {
-  if (!defaultInstance) {
-    defaultInstance = new JSONFormatter();
-  }
-  return reorderOps(defaultInstance.format(delta, left));
-};
-
-export const log = (delta, left) => {
-  console.log(format(delta, left));
 };
