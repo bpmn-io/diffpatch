@@ -1,7 +1,7 @@
-> As of version `1.0.0` this library exposes ES modules. Use an ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to bundle it for the browser.
+> As of version `0.5.0` this library exposes ES modules. Use an ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to bundle it for the browser.
 
 
-# @bpmn-io/jsondiffpatch
+# diffpatch
 
 [![Build Status](https://secure.travis-ci.org/bpmn-io/jsondiffpatch.svg)](http://travis-ci.org/bpmn-io/jsondiffpatch)
 
@@ -13,7 +13,7 @@ Diff and patch JavaScript objects.
 ```javascript
 import {
   DiffPatcher
-} from '@bpmn-io/jsondiffpatch';
+} from 'diffpatch';
 
 const diffPatcher = new DiffPatcher();
 
@@ -59,7 +59,7 @@ const diff = diffPatcher.diff(man, woman);
 import {
   DiffPatcher,
   dateReviver
-} from '@bpmn-io/jsondiffpatch';
+} from 'diffpatch';
 
 var diffPatch = new DiffPatcher();
 
@@ -105,7 +105,7 @@ Array diffing:
 ```javascript
 import {
   DiffPatcher
-} from '@bpmn-io/jsondiffpatch';
+} from 'diffpatch';
 
 // sample data
 var country = {
@@ -196,7 +196,7 @@ If you want to understand deltas, see [delta format documentation](docs/deltas.m
 ## Installing
 
 ```sh
-npm i @bpmn-io/jsondiffpatch
+npm i diffpatch
 ```
 
 
@@ -248,6 +248,11 @@ We provide a number of diff formatters, check them out [here](docs/formatters.md
 ```diff()```, ```patch()``` and ```reverse()``` functions are implemented using Pipes & Filters pattern, making it extremely customizable by adding or replacing filters on a pipe.
 
 Check [Plugins documentation](docs/plugins.md) for details.
+
+
+## Credits
+
+This library is a fork of [jsondiffpatch](https://github.com/benjamine/jsondiffpatch) and borrows heavily from the original implementation.
 
 
 ## License
