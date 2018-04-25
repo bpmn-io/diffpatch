@@ -9,10 +9,6 @@
   ],
   "main": "src/index.js",
   "types": "src/index.d.ts",
-  "files": [
-    "dist",
-    "bin"
-  ],
   "bin": {
     "jsondiffpatch": "./bin/jsondiffpatch"
   },
