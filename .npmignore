@@ -1,0 +1,8 @@
+!dist
+test
+docs
+.editorconfig
+.eslintignore
+.eslintrc
+rollup.config.js
+.travis.yml
