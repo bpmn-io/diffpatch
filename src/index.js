@@ -1,11 +1,16 @@
 import DiffPatcher from './diffpatcher';
-export DiffPatcher from './diffpatcher';
+
+export {
+  default as DiffPatcher,
+} from './diffpatcher';
 
 export function create(options) {
   return new DiffPatcher(options);
 }
 
-export dateReviver from './date-reviver';
+export {
+  default as dateReviver,
+} from './date-reviver';
 
 export function diff() {
   return staticCall('diff', arguments);
@@ -32,11 +37,3 @@ function staticCall(method, args) {
 
   return instance[method](...args);
 }
-
-export {
-  AnnotatedFormatter,
-  BaseFormatter,
-  ConsoleFormatter,
-  HtmlFormatter,
-  JsonPatchFormatter,
-} from './formatters';

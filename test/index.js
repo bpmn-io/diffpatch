@@ -4,14 +4,17 @@
  */
 import {
   DiffPatcher,
-  JsonPatchFormatter,
-  HtmlFormatter,
   clone,
   diff,
   patch,
   reverse,
   unpatch,
 } from '../';
+
+import {
+  JSONPatchFormatter,
+  HtmlFormatter,
+} from '../src/formatters';
 
 import examples from './examples/diffpatch';
 
@@ -388,7 +391,7 @@ describe('DiffPatcher', () => {
 
       before(() => {
         instance = new DiffPatcher();
-        formatter = new JsonPatchFormatter();
+        formatter = new JSONPatchFormatter();
       });
 
       const expectFormat = (before, after, expected) => {
