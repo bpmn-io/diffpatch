@@ -3,7 +3,7 @@
 
 # diffpatch
 
-[![Build Status](https://secure.travis-ci.org/bpmn-io/diffpatch.svg)](http://travis-ci.org/bpmn-io/diffpatch)
+[![Build Status](https://secure.travis-ci.com/bpmn-io/diffpatch.svg)](http://travis-ci.com/bpmn-io/diffpatch)
 
 Diff and patch JavaScript objects.
 
