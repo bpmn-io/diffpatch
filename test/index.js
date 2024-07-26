@@ -1,7 +1,7 @@
-/*
- * mocha's bdd syntax is inspired in RSpec
- *   please read: http://betterspecs.org/
- */
+import {
+  expect,
+} from 'chai';
+
 import {
   DiffPatcher,
   clone,
@@ -9,20 +9,14 @@ import {
   patch,
   reverse,
   unpatch,
-} from '../';
+} from '../lib/index.js';
 
-import {
-  JSONPatchFormatter,
-  HtmlFormatter,
-} from '../lib/formatters';
+import JSONPatchFormatter from '../lib/formatters/jsonpatch.js';
+import HtmlFormatter from '../lib/formatters/html.js';
 
-import examples from './examples/diffpatch';
+import examples from './examples/diffpatch.js';
 
-import {
-  expect,
-} from 'chai';
-
-describe('jsondiffpatch', () => {
+describe('diffpatch', () => {
   before(() => {});
   it('has a diff method', () => {
     expect(diff).to.be.a('function');
