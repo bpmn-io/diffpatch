@@ -30,11 +30,11 @@
     "patch"
   ],
   "dependencies": {
-    "diff-match-patch": "^1.0.0",
     "picocolors": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^5.1.1",
+    "diff-match-patch": "^1.0.5",
     "eslint": "^8.57.0",
     "eslint-plugin-bpmn-io": "^1.0.1",
     "eslint-plugin-import": "^2.8.0",
