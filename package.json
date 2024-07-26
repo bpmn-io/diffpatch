@@ -48,6 +48,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=8"
