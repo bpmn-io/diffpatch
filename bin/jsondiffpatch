@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const jsondiffpatch = require('..');
+const diffpatch = require('..');
 
 const fs = require('fs');
 
@@ -8,12 +8,12 @@ const fileLeft = process.argv[2];
 const fileRight = process.argv[3];
 
 if (!fileLeft || !fileRight) {
-  console.log('\n  USAGE: jsondiffpatch left.json right.json');
-  return;
+  console.log('\n  USAGE: diffpatch left.json right.json');
+  process.exit(1);
 }
 
 const left = JSON.parse(fs.readFileSync(fileLeft));
 const right = JSON.parse(fs.readFileSync(fileRight));
 
-const delta = jsondiffpatch.diff(left, right);
-jsondiffpatch.console.log(delta);
+const delta = diffpatch.diff(left, right);
+diffpatch.console.log(delta);
