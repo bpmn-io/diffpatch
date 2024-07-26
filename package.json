@@ -10,7 +10,7 @@
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "bin": {
-    "jsondiffpatch": "./bin/jsondiffpatch"
+    "diffpatch": "./bin/diffpatch"
   },
   "scripts": {
     "all": "run-s lint test",
