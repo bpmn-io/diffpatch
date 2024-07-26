@@ -1,3 +1,5 @@
+import DiffMatchPatch from 'diff-match-patch';
+
 const examples = {};
 
 const exampleDate = () => new Date(2020, 10, 30, 15, 10, 3);
@@ -570,6 +572,7 @@ examples.text = [
     right: largeText,
     delta: [ shortText, largeText ],
     reverse: [ largeText, shortText ],
+    options: { textDiff: { diffMatchPatch: DiffMatchPatch } },
   },
   {
     left: largeText,
@@ -589,11 +592,13 @@ examples.text = [
       2,
     ],
     exactReverse: false,
+    options: { textDiff: { diffMatchPatch: DiffMatchPatch } },
   },
   {
     name: 'larger than min length',
     options: {
       textDiff: {
+        diffMatchPatch: DiffMatchPatch,
         minLength: 10,
       },
     },
@@ -601,12 +606,13 @@ examples.text = [
     right: largeText.substr(0, 11).replace(/Madre/g, 'Padre'),
     delta: [ '@@ -1,10 +1,11 @@\n -\n-M\n+P\n adre,%0Acu\n+a\n', 0, 2 ],
     reverse: [ '@@ -1,11 +1,10 @@\n -\n-P\n+M\n adre,%0Acu\n-a\n', 0, 2 ],
-    exactReverse: false,
+    exactReverse: false
   },
   {
     name: 'shorter than min length',
     options: {
       textDiff: {
+        diffMatchPatch: DiffMatchPatch,
         minLength: 10,
       },
     },
