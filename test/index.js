@@ -123,6 +123,7 @@ describe('DiffPatcher', () => {
               if (example.exactReverse !== false) {
                 expect(reverse).to.deep.equal(example.reverse);
               } else {
+
                 // reversed delta and the swapped-diff delta are
                 // not always equal, to verify they're equivalent,
                 // patch and compare the results
@@ -204,8 +205,8 @@ describe('DiffPatcher', () => {
       left.oldProp.value = 1;
       right.newProp.value = 8;
       expect(delta).to.deep.equal({
-        oldProp: [{ value: 3 }, 0, 0],
-        newProp: [{ value: 5 }],
+        oldProp: [ { value: 3 }, 0, 0 ],
+        newProp: [ { value: 5 } ],
       });
     });
   });
@@ -213,19 +214,19 @@ describe('DiffPatcher', () => {
   describe('static shortcuts', () => {
     it('diff', () => {
       const delta = diff(4, 5);
-      expect(delta).to.deep.equal([4, 5]);
+      expect(delta).to.deep.equal([ 4, 5 ]);
     });
     it('patch', () => {
-      const right = patch(4, [4, 5]);
+      const right = patch(4, [ 4, 5 ]);
       expect(right).to.eql(5);
     });
     it('unpatch', () => {
-      const left = unpatch(5, [4, 5]);
+      const left = unpatch(5, [ 4, 5 ]);
       expect(left).to.eql(4);
     });
     it('reverse', () => {
-      const reverseDelta = reverse([4, 5]);
-      expect(reverseDelta).to.deep.equal([5, 4]);
+      const reverseDelta = reverse([ 4, 5 ]);
+      expect(reverseDelta).to.deep.equal([ 5, 4 ]);
     });
   });
 
@@ -251,18 +252,21 @@ describe('DiffPatcher', () => {
       const NUMERIC_DIFFERENCE = -8;
 
       it('diff', function() {
+
         // a constant to identify the custom delta type
         function numericDiffFilter(context) {
           if (
             typeof context.left === 'number' &&
             typeof context.right === 'number'
           ) {
+
             // store number delta, eg. useful for distributed counters
             context
-              .setResult([0, context.right - context.left, NUMERIC_DIFFERENCE])
+              .setResult([ 0, context.right - context.left, NUMERIC_DIFFERENCE ])
               .exit();
           }
         }
+
         // a filterName is useful if I want to allow other filters to
         // be inserted before/after this one
         numericDiffFilter.filterName = 'numeric';
@@ -274,7 +278,7 @@ describe('DiffPatcher', () => {
           { population: 400 },
           { population: 403 }
         );
-        expect(delta).to.deep.equal({ population: [0, 3, NUMERIC_DIFFERENCE] });
+        expect(delta).to.deep.equal({ population: [ 0, 3, NUMERIC_DIFFERENCE ] });
       });
 
       it('patch', function() {
@@ -293,7 +297,7 @@ describe('DiffPatcher', () => {
           numericPatchFilter
         );
 
-        const delta = { population: [0, 3, NUMERIC_DIFFERENCE] };
+        const delta = { population: [ 0, 3, NUMERIC_DIFFERENCE ] };
         const right = this.instance.patch({ population: 600 }, delta);
         expect(right).to.deep.equal({ population: 603 });
       });
@@ -309,7 +313,7 @@ describe('DiffPatcher', () => {
             context.delta[2] === NUMERIC_DIFFERENCE
           ) {
             context
-              .setResult([0, -context.delta[1], NUMERIC_DIFFERENCE])
+              .setResult([ 0, -context.delta[1], NUMERIC_DIFFERENCE ])
               .exit();
           }
         }
@@ -319,10 +323,10 @@ describe('DiffPatcher', () => {
           numericReverseFilter
         );
 
-        const delta = { population: [0, 3, NUMERIC_DIFFERENCE] };
+        const delta = { population: [ 0, 3, NUMERIC_DIFFERENCE ] };
         const reverseDelta = this.instance.reverse(delta);
         expect(reverseDelta).to.deep.equal({
-          population: [0, -3, NUMERIC_DIFFERENCE],
+          population: [ 0, -3, NUMERIC_DIFFERENCE ],
         });
         const right = { population: 703 };
         this.instance.unpatch(right, delta);
@@ -354,7 +358,7 @@ describe('DiffPatcher', () => {
 
       it('replaces specified filter', function() {
         function fooFilter(context) {
-          context.setResult(['foo']).exit();
+          context.setResult([ 'foo' ]).exit();
         }
         fooFilter.filterName = 'foo';
         expect(this.instance.processor.pipes.diff.list()).to.deep.equal([
@@ -416,7 +420,7 @@ describe('DiffPatcher', () => {
       });
 
       it('should format an add operation for array insertion', () => {
-        expectFormat([1, 2, 3], [1, 2, 3, 4], [addOp('/3', 4)]);
+        expectFormat([ 1, 2, 3 ], [ 1, 2, 3, 4 ], [ addOp('/3', 4) ]);
       });
 
       it('should format an add operation for object insertion', () => {
@@ -426,7 +430,7 @@ describe('DiffPatcher', () => {
       });
 
       it('should format for deletion of array', () => {
-        expectFormat([1, 2, 3, 4], [1, 2, 3], [removeOp('/3')]);
+        expectFormat([ 1, 2, 3, 4 ], [ 1, 2, 3 ], [ removeOp('/3') ]);
       });
 
       it('should format for deletion of object', () => {
@@ -442,11 +446,11 @@ describe('DiffPatcher', () => {
       });
 
       it('should put add/remove for array with primitive items', () => {
-        expectFormat([1, 2, 3], [1, 2, 4], [removeOp('/2'), addOp('/2', 4)]);
+        expectFormat([ 1, 2, 3 ], [ 1, 2, 4 ], [ removeOp('/2'), addOp('/2', 4) ]);
       });
 
       it('should sort remove by desc order', () => {
-        expectFormat([1, 2, 3], [1], [removeOp('/2'), removeOp('/1')]);
+        expectFormat([ 1, 2, 3 ], [ 1 ], [ removeOp('/2'), removeOp('/1') ]);
       });
 
       describe('patcher with comparator', () => {
@@ -478,16 +482,16 @@ describe('DiffPatcher', () => {
           const after = [
             {
               id: 'remaining_outer',
-              items: [anObjectWithId('remaining_inner')],
+              items: [ anObjectWithId('remaining_inner') ],
             },
           ];
-          const expectedDiff = [removeOp('/0'), removeOp('/0/items/0')];
+          const expectedDiff = [ removeOp('/0'), removeOp('/0/items/0') ];
           expectFormat(before, after, expectedDiff);
         });
       });
 
       it('should annotate as moved op', () => {
-        expectFormat([1, 2], [2, 1], [{ op: 'move', from: '/1', path: '/0' }]);
+        expectFormat([ 1, 2 ], [ 2, 1 ], [ { op: 'move', from: '/1', path: '/0' } ]);
       });
     });
 
@@ -534,9 +538,9 @@ describe('DiffPatcher', () => {
           html.push('</li>');
         });
         return (
-          `<div class="jsondiffpatch-delta jsondiffpatch-textdiff">` +
-          `<div class="jsondiffpatch-value">` +
-          `<ul class="jsondiffpatch-textdiff">` +
+          '<div class="jsondiffpatch-delta jsondiffpatch-textdiff">' +
+          '<div class="jsondiffpatch-value">' +
+          '<ul class="jsondiffpatch-textdiff">' +
           `${html.join('')}</ul></div></div>`
         );
       };
