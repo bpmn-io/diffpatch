@@ -46,7 +46,8 @@
     "access": "public"
   },
   "files": [
-    "lib"
+    "lib",
+    "bin"
   ],
   "license": "MIT",
   "engines": {
