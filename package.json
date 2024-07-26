@@ -7,8 +7,8 @@
     "Benjamin Eidelman <beneidel@gmail.com>",
     "bpmn.io Contributors <https://bpmn.io>"
   ],
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "bin": {
     "diffpatch": "./bin/diffpatch"
   },

@@ -14,7 +14,7 @@ import {
 import {
   JSONPatchFormatter,
   HtmlFormatter,
-} from '../src/formatters';
+} from '../lib/formatters';
 
 import examples from './examples/diffpatch';
 
