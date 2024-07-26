@@ -1,14 +1,3 @@
 {
-  "extends": "../.eslintrc",
-  "globals": {
-    "mocha": false,
-    "describe": false,
-    "when": false,
-    "before": false,
-    "beforeEach": false,
-    "after": false,
-    "afterEach": false,
-    "it": false,
-    "expect": false
-  }
+  "extends": "plugin:bpmn-io/mocha"
 }
