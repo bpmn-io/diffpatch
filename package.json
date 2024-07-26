@@ -30,8 +30,8 @@
     "patch"
   ],
   "dependencies": {
-    "chalk": "^2.3.0",
-    "diff-match-patch": "^1.0.0"
+    "diff-match-patch": "^1.0.0",
+    "picocolors": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^5.1.1",
